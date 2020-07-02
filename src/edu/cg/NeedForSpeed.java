@@ -36,8 +36,8 @@ public class NeedForSpeed implements GLEventListener {
 	// towards the car direction.
 	// TODO: add fields as you want. For example:
 	// - Car initial position (should be fixed).
-	private static final int CAR_SCALE_FACTOR = 4;
-	private static final Point CAR_STARTING_POINT = new Point(0.0, 0.0, -(4.0 + CAR_SCALE_FACTOR * (C_LENGTH / 2 + B_LENGTH)) );
+	private static final int CAR_SCALE_FACTOR = 5;
+	private static final Point CAR_STARTING_POINT = new Point(0.0, 0.0, -(4.5 + CAR_SCALE_FACTOR * (C_LENGTH / 2 + B_LENGTH)) );
 
 	// - Camera initial position (should be fixed)
 	// - Different camera settings
@@ -153,7 +153,6 @@ public class NeedForSpeed implements GLEventListener {
 	}
 
 	private void renderCar(GL2 gl) {
-		// TODO: Render the car.
 		// * Remember: the car position should be the initial position + the accumulated translation.
 		//             This will simulate the car movement.
 		// * Remember: the car was modeled locally, you may need to rotate/scale and translate the car appropriately.
@@ -161,10 +160,11 @@ public class NeedForSpeed implements GLEventListener {
 		double xPosition = CAR_STARTING_POINT.x + carCameraTranslation.x;
 		double yPosition = CAR_STARTING_POINT.y + carCameraTranslation.y;
 		double zPosition = CAR_STARTING_POINT.z + carCameraTranslation.z;
-		double carRotation = 90 - gameState.getCarRotation();
+
 		gl.glPushMatrix();
 		gl.glTranslated(xPosition, yPosition, zPosition);
-		gl.glRotated(carRotation,0, 1, 0);
+		double rotationAngel = 90 - gameState.getCarRotation();
+		gl.glRotated(rotationAngel,0, 1, 0);
 		gl.glScaled(CAR_SCALE_FACTOR, CAR_SCALE_FACTOR, CAR_SCALE_FACTOR);
 		car.render(gl);
 		gl.glPopMatrix();
