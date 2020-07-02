@@ -113,15 +113,16 @@ public class NeedForSpeed implements GLEventListener {
 	}
 
 	private void setupCamera(GL2 gl) {
-		// TODO: You are advised to use :
-		//       GLU glu = new GLU();
-		//       glu.gluLookAt();
 		if (isBirdseyeView) {
-			// TODO Setup camera for Birds-eye view
-		} else {
 			GLU glu = new GLU();
-			glu.gluLookAt(0.0,2.0,0.0,
-						 0.0,2.0,-1.0,
+			glu.gluLookAt(CAR_STARTING_POINT.x + carCameraTranslation.x,50.0, CAR_STARTING_POINT.z + carCameraTranslation.z,
+					CAR_STARTING_POINT.x + carCameraTranslation.x,-1.0, CAR_STARTING_POINT.z + carCameraTranslation.z,
+					0.0,0.0,-1.0 );
+		}
+		else {
+			GLU glu = new GLU();
+			glu.gluLookAt(CAR_STARTING_POINT.x + carCameraTranslation.x,2.0,CAR_STARTING_POINT.z + carCameraTranslation.z+7.0,
+					CAR_STARTING_POINT.x + carCameraTranslation.x,2.0,CAR_STARTING_POINT.z + carCameraTranslation.z-1.0,
 						 0.0,1.0,0.0);
 		}
 	}
