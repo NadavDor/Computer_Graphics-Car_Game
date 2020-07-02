@@ -122,13 +122,18 @@ public class NeedForSpeed implements GLEventListener {
 						 0.0,2.0,-1.0,
 						 0.0,1.0,0.0);
 		}
-
 	}
 
 	private void setupLights(GL2 gl) {
 		if (isDayMode) {
-			// TODO Setup day lighting.
-			// * Remember: switch-off any light sources that were used in night mode and are not use in day mode.
+			gl.glDisable(GL2.GL_LIGHT1);
+			gl.glDisable(GL2.GL_LIGHT2);
+			float[] sunIntensity = new float[]{1.f, 1.f, 1.f, 1.f};
+			gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_SPECULAR, sunIntensity, 0);
+			gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, sunIntensity, 0);
+			float[] sunDirection = new float[]{0f, 1.f, 1.0f, 0.f};
+			gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, sunDirection, 0);
+			gl.glEnable(GL2.GL_LIGHT0);
 		} else {
 			// TODO Setup night lighting.
 			// * Remember: switch-off any light sources that are used in day mode
