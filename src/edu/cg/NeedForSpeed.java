@@ -57,10 +57,9 @@ public class NeedForSpeed implements GLEventListener {
 			initModel(gl);
 		}
 		if (isDayMode) {
-			// TODO: Setup background when day mode is on
-			// use gl.glClearColor() function.
+			gl.glClearColor(0.5f,0.5f,0.9f,1.0f);
 		} else {
-			// TODO: Setup background when night mode is on
+			gl.glClearColor(0.1f,0.1f,0.2f,1.0f);
 		}
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
@@ -118,7 +117,10 @@ public class NeedForSpeed implements GLEventListener {
 		if (isBirdseyeView) {
 			// TODO Setup camera for Birds-eye view
 		} else {
-			// TODO Setup camera for Third-person view
+			GLU glu = new GLU();
+			glu.gluLookAt(0.0,2.0,0.0,
+						 0.0,2.0,-1.0,
+						 0.0,1.0,0.0);
 		}
 
 	}
@@ -188,7 +190,13 @@ public class NeedForSpeed implements GLEventListener {
 
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-		// TODO Setup the projection matrix here.
+		GL2 gl = drawable.getGL().getGL2();
+		gl.glMatrixMode(GL2.GL_PROJECTION);
+		gl.glLoadIdentity();
+
+		GLU glu = new GLU();
+		double aspectRatio = (double)(width)/height;
+		glu.gluPerspective(68, aspectRatio,2,500);
 	}
 
 	/**
