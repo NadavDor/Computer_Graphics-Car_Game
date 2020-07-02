@@ -1,22 +1,21 @@
 package edu.cg;
 
-import java.awt.Component;
-import java.util.List;
-
-import javax.swing.JOptionPane;
-
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import edu.cg.algebra.Point;
 import edu.cg.algebra.Vec;
-import edu.cg.models.BoundingSphere;
+import edu.cg.models.Car.F1Car;
 import edu.cg.models.Track;
 import edu.cg.models.TrackSegment;
-import edu.cg.models.Car.F1Car;
-//import edu.cg.models.Car.Specification;
+
+import static edu.cg.models.Car.Specification.*;
+import javax.swing.*;
+
+import java.awt.Component;
 
 /**
  * An OpenGL 3D Game.
@@ -37,6 +36,9 @@ public class NeedForSpeed implements GLEventListener {
 	// towards the car direction.
 	// TODO: add fields as you want. For example:
 	// - Car initial position (should be fixed).
+	private static final int CAR_SCALE_FACTOR = 4;
+	private static final Point CAR_STARTING_POINT = new Point(0.0, 0.0, -(4.0 + CAR_SCALE_FACTOR * (C_LENGTH / 2 + B_LENGTH)) );
+
 	// - Camera initial position (should be fixed)
 	// - Different camera settings
 	// - Light colors
@@ -156,6 +158,16 @@ public class NeedForSpeed implements GLEventListener {
 		//             This will simulate the car movement.
 		// * Remember: the car was modeled locally, you may need to rotate/scale and translate the car appropriately.
 		// * Recommendation: it is recommended to define fields (such as car initial position) that can be used during rendering.
+		double xPosition = CAR_STARTING_POINT.x + carCameraTranslation.x;
+		double yPosition = CAR_STARTING_POINT.y + carCameraTranslation.y;
+		double zPosition = CAR_STARTING_POINT.z + carCameraTranslation.z;
+		double carRotation = 90 - gameState.getCarRotation();
+		gl.glPushMatrix();
+		gl.glTranslated(xPosition, yPosition, zPosition);
+		gl.glRotated(carRotation,0, 1, 0);
+		gl.glScaled(CAR_SCALE_FACTOR, CAR_SCALE_FACTOR, CAR_SCALE_FACTOR);
+		car.render(gl);
+		gl.glPopMatrix();
 	}
 
 	public GameState getGameState() {
